@@ -20,7 +20,7 @@ function onSubmitForm(event) {
   event.preventDefault();
   page = 1;
   fotoGallery.innerHTML = '';
-  fetchFotos(event);
+  fetchFotos();
 }
 
 async function fetchFotos() {
