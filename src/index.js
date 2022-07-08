@@ -23,15 +23,16 @@ function onSubmitForm(event) {
   fetchFotos(event);
 }
 
-function fetchFotos() {
+async function fetchFotos() {
   const searchName = searchFormInput.value.split(' ').join('+');
-  axios.get(
+  try {
+    const response = await axios.get(
       `${API_URL}?key=${API_KEY}&q=${searchName}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
-    )
-    .then(response => {
-      renderFotosCards(response);
-    })
-    .catch(error => console.log(error));
+    );
+    return renderFotosCards(response);
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 function renderFotosCards(response) {
@@ -56,16 +57,16 @@ function renderFotosCards(response) {
                         <img src="${foto.webformatURL}" alt="${foto.tags}" loading="lazy"/>
                             <div class="info">
                                 <p class="info-item">
-                                <b>Likes</b><br> ${foto.likes}
+                                <b>Likes</b><br> <i>${foto.likes}</i>
                                 </p>
                                 <p class="info-item">
-                                <b>Views</b><br> ${foto.views}
+                                <b>Views</b><br> <i>${foto.views}</i>
                                 </p>
                                 <p class="info-item">
-                                <b>Comments</b><br> ${foto.comments}
+                                <b>Comments</b><br> <i>${foto.comments}</i>
                                 </p>
                                 <p class="info-item">
-                                <b>Downloads</b><br> ${foto.downloads}
+                                <b>Downloads</b><br> <i>${foto.downloads}</i>
                                 </p>
                             </div>
                     </a>
