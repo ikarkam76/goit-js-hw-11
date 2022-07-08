@@ -56,16 +56,16 @@ function renderFotosCards(response) {
                         <img src="${foto.webformatURL}" alt="${foto.tags}" loading="lazy"/>
                             <div class="info">
                                 <p class="info-item">
-                                <b>Likes</b> ${foto.likes}
+                                <b>Likes</b><br> ${foto.likes}
                                 </p>
                                 <p class="info-item">
-                                <b>Views</b> ${foto.views}
+                                <b>Views</b><br> ${foto.views}
                                 </p>
                                 <p class="info-item">
-                                <b>Comments</b> ${foto.comments}
+                                <b>Comments</b><br> ${foto.comments}
                                 </p>
                                 <p class="info-item">
-                                <b>Downloads</b> ${foto.downloads}
+                                <b>Downloads</b><br> ${foto.downloads}
                                 </p>
                             </div>
                     </a>

@@ -20,10 +20,6 @@ input {
   height: 40px;
 }
 
-.load-more {
-  
-}
-
 .gallery {
   display: grid;
   max-width: 1140px;
@@ -55,9 +51,11 @@ img {
 
 .info {
   display: flex;
-  padding-left: 10px;
 }
 
+.info-item{
+margin-left: 20px;
+}
 .gallery__link {
   display: block;
   text-decoration: none;
