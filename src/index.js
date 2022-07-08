@@ -6,12 +6,13 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const searchForm = document.querySelector('#search-form');
 const searchFormInput = document.querySelector('input');
 const fotoGallery = document.querySelector('.gallery');
-// const loadMoreButton = document.querySelector('.load-more');
-let page = 1;
+let page = 0;
 let gallery = new SimpleLightbox('.gallery a', {});
+const API_URL = 'https://pixabay.com/api/';
+const API_KEY = '28478003-fd100ae876bc055f23610276b';
+
   
 searchForm.addEventListener('submit', onSubmitForm);
-// loadMoreButton.addEventListener('click', fetchFotos);
 
 
  
@@ -25,7 +26,7 @@ function onSubmitForm(event) {
 function fetchFotos() {
   const searchName = searchFormInput.value.split(' ').join('+');
   axios.get(
-      `https://pixabay.com/api/?key=28478003-fd100ae876bc055f23610276b&q=${searchName}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
+      `${API_URL}?key=${API_KEY}&q=${searchName}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
     )
     .then(response => {
       renderFotosCards(response);
@@ -34,13 +35,12 @@ function fetchFotos() {
 }
 
 function renderFotosCards(response) {
-  console.log(response.data.totalHits);
   if (!response.data.totalHits) {
     return Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
   } else {
-    if (response.data.totalHits / 40 <= page - 1) {
+    if (response.data.totalHits / 40 <= page ) {
       return Notify.success(
         `We're sorry, but you've reached the end of search results.`
       );
@@ -70,25 +70,18 @@ function renderFotosCards(response) {
                             </div>
                     </a>
                 </div>`;
-      })
-      .join(' ');
+      }).join(' ');
     page += 1;
     fotoGallery.insertAdjacentHTML('beforeend', markup);
-    if (page >= 2) {
-      const { height: cardHeight } =
-        fotoGallery.firstElementChild.getBoundingClientRect();
-        window.scrollBy({
-          top: cardHeight * 3,
-          behavior: 'smooth',
-        });
-    }
    gallery.refresh();
   }
 }
 
 window.addEventListener('scroll', () => {
-  const documentRect = document.documentElement.getBoundingClientRect();
-  if (documentRect.bottom < document.documentElement.clientHeight + 150) {
+  const documentRect = fotoGallery.getBoundingClientRect();
+  if (
+    documentRect.top * -1 > fotoGallery.clientHeight - window.visualViewport.height
+  ) {
     fetchFotos();
   }
 });
