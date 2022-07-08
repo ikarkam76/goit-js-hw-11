@@ -80,7 +80,7 @@ function renderFotosCards(response) {
 window.addEventListener('scroll', () => {
   const documentRect = fotoGallery.getBoundingClientRect();
   if (
-    documentRect.top * -1 > fotoGallery.clientHeight - window.visualViewport.height
+    documentRect.top * -1 > fotoGallery.clientHeight - window.visualViewport.height - 2
   ) {
     fetchFotos();
   }
